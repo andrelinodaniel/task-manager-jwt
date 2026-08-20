@@ -31,6 +31,22 @@ app.post('/tasks', (req,res)=>{
    
 })
 
+app.put('/tasks/:id', (req,res)=>{
+    const idUrl = Number(req.params.id);
+    const posicao = tasks.findIndex(task => task.id == idUrl)
+    if (posicao === -1 ) return res.status(404).json({mensagem: "item não encontrado!" });
+    if (req.body.title !== undefined){
+        tasks[posicao].title = req.body.title;
+    }
+    if (req.body.completed !== undefined){
+         tasks[posicao].completed = req.body.completed;
+    }
+   
+    res.status(200).json(tasks[posicao]);
+
+
+})
+
 app.delete('/tasks/:id', (req,res) => {
     const idUrl = Number(req.params.id);
     const posicao = tasks.findIndex(task => task.id == idUrl )
