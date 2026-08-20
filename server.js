@@ -16,7 +16,8 @@ app.get('/', (req,res) => {
 });
 
 app.get('/tasks', (req,res)=>{
-    res.json(tasks)
+    return res.json(tasks.length == 0? {mensagem:"LISTA ESTÁ VAZIA!"}:tasks); 
+
 })
 
 app.post('/tasks', (req,res)=>{
@@ -28,6 +29,14 @@ app.post('/tasks', (req,res)=>{
     tasks.push(tarefa)
     res.status(201).json(tarefa)
    
+})
+
+app.delete('/tasks/:id', (req,res) => {
+    const idUrl = Number(req.params.id);
+    const posicao = tasks.findIndex(task => task.id == idUrl )
+    if (posicao === -1 ) return res.status(404).json({mensagem: "item não encontrado!" });
+    const removedTask = tasks.splice(posicao,1)
+    res.status(200).json({msg:` Task ${removedTask[0].title} deletada!`})
 })
 
 app.listen(port, () => {
