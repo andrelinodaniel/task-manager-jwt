@@ -1,0 +1,12 @@
+const express = require('express');
+
+const router = express.Router();
+
+const taskController = require('../controllers/taskController');
+
+router.get('/', taskController.listarTarefa);
+router.post('/', taskController.criarTarefa);
+router.put('/:id', taskController.atualizarTarefa);
+router.delete('/:id', taskController.deletarTarefa);
+
+module.exports = router;
